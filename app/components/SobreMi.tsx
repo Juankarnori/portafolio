@@ -1,9 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { Code2, Database, Zap, Globe } from 'lucide-react'
+import { Code2, Database, Zap, Globe, User } from 'lucide-react'
+import Image from 'next/image'
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
@@ -46,20 +45,55 @@ export default function SobreMi() {
   return (
     <section id="sobre-mi" className="py-28 px-4">
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <motion.div {...fadeUp(0)} className="text-center mb-16">
+        {/* Header label */}
+        <motion.div {...fadeUp(0)} className="text-center mb-14">
           <span className="text-xs font-bold tracking-widest text-violet-500 uppercase">Sobre mí</span>
-          <h2 className="text-3xl md:text-5xl font-black text-[var(--text)] mt-3 mb-4">
-            Desarrollador con foco en{' '}
-            <span className="bg-gradient-to-r from-violet-400 to-violet-600 bg-clip-text text-transparent">
-              resultados reales
-            </span>
-          </h2>
-          <p className="text-[var(--muted)] max-w-xl mx-auto leading-relaxed">
-            Soy Juan Noriega, desarrollador full stack basado en Ambato, Ecuador. Me especializo en
-            convertir negocios físicos en operaciones digitales completas, construyendo desde el diseño
-            hasta el despliegue en producción.
-          </p>
+        </motion.div>
+
+        {/* Foto + bio */}
+        <motion.div {...fadeUp(0.05)} className="flex flex-col md:flex-row items-center gap-10 mb-16">
+          {/* Foto */}
+          <div className="shrink-0">
+            <div className="relative w-40 h-40 md:w-52 md:h-52">
+              {/* Anillo violeta */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500 to-violet-800 p-[3px]">
+                <div className="w-full h-full rounded-full overflow-hidden bg-[var(--bg-card)]">
+                  <Image
+                    src="/foto.jpg"
+                    alt="Juan Noriega"
+                    width={208}
+                    height={208}
+                    className="w-full h-full object-cover"
+                    priority
+                  />
+                </div>
+              </div>
+              {/* Badge disponible */}
+              <div className="absolute -bottom-2 -right-2 bg-[var(--bg-card)] border border-[var(--border)] rounded-full px-3 py-1 flex items-center gap-1.5 shadow-lg">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-xs font-semibold text-[var(--text)] whitespace-nowrap">Disponible</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Bio */}
+          <div className="flex-1 text-center md:text-left">
+            <h2 className="text-3xl md:text-5xl font-black text-[var(--text)] mb-4 leading-tight">
+              Desarrollador con foco en{' '}
+              <span className="bg-gradient-to-r from-violet-400 to-violet-600 bg-clip-text text-transparent">
+                resultados reales
+              </span>
+            </h2>
+            <p className="text-[var(--muted)] leading-relaxed mb-4">
+              Soy Juan Noriega, desarrollador full stack basado en Ambato, Ecuador. Me especializo en
+              convertir negocios físicos en operaciones digitales completas, construyendo desde el
+              diseño hasta el despliegue en producción.
+            </p>
+            <p className="text-[var(--muted)] leading-relaxed">
+              Trabajo con Next.js, TypeScript y Supabase para entregar proyectos rápidos, escalables
+              y listos para crecer.
+            </p>
+          </div>
         </motion.div>
 
         {/* Stats */}
@@ -76,7 +110,7 @@ export default function SobreMi() {
         </motion.div>
 
         {/* Focos */}
-        <motion.div {...fadeUp(0.15)} className="grid md:grid-cols-3 gap-4 mb-16">
+        <div className="grid md:grid-cols-3 gap-4 mb-16">
           {focos.map((f, i) => (
             <motion.div
               key={f.title}
@@ -90,7 +124,7 @@ export default function SobreMi() {
               <p className="text-sm text-[var(--muted)] leading-relaxed">{f.desc}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Stack */}
         <motion.div {...fadeUp(0.2)}>

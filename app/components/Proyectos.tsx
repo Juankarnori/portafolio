@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { ExternalLink, ArrowRight } from 'lucide-react'
+import Image from 'next/image'
+import { useState } from 'react'
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
@@ -25,9 +27,10 @@ const proyectos = [
     stack: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS'],
     demo: 'https://copiadora-el-estudiante.vercel.app',
     repo: 'https://github.com/Juankarnori/copiadora-el-estudiante',
-    color: 'from-violet-600/20 to-purple-600/5',
-    accent: 'bg-violet-600/10 text-violet-400 border-violet-500/20',
+    screenshot: '/screenshots/copiadora.png',
+    gradient: 'from-violet-900/40 to-purple-900/20',
     tag: 'E-commerce',
+    tagColor: 'bg-violet-600/10 text-violet-400 border-violet-500/20',
   },
   {
     numero: '02',
@@ -37,9 +40,10 @@ const proyectos = [
     stack: ['Next.js', 'TypeScript', 'Supabase', 'Resend'],
     demo: 'https://agendalo-eta.vercel.app',
     repo: 'https://github.com/Juankarnori/agendalo',
-    color: 'from-emerald-600/20 to-teal-600/5',
-    accent: 'bg-emerald-600/10 text-emerald-400 border-emerald-500/20',
+    screenshot: '/screenshots/agendalo.png',
+    gradient: 'from-emerald-900/40 to-teal-900/20',
     tag: 'SaaS',
+    tagColor: 'bg-emerald-600/10 text-emerald-400 border-emerald-500/20',
   },
   {
     numero: '03',
@@ -49,11 +53,39 @@ const proyectos = [
     stack: ['Next.js', 'TypeScript', 'Recharts', 'Tailwind CSS'],
     demo: 'https://gym-landing-sand.vercel.app',
     repo: 'https://github.com/Juankarnori/gym-landing',
-    color: 'from-orange-600/20 to-red-600/5',
-    accent: 'bg-orange-600/10 text-orange-400 border-orange-500/20',
+    screenshot: '/screenshots/ironpeak.png',
+    gradient: 'from-orange-900/40 to-red-900/20',
     tag: 'Landing + Dashboard',
+    tagColor: 'bg-orange-600/10 text-orange-400 border-orange-500/20',
   },
 ]
+
+function ProjectImage({ src, alt, gradient }: { src: string; alt: string; gradient: string }) {
+  const [error, setError] = useState(false)
+
+  return (
+    <div className={`relative h-52 overflow-hidden bg-gradient-to-br ${gradient}`}>
+      {!error && (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover object-top"
+          onError={() => setError(true)}
+        />
+      )}
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-2 opacity-30">
+            <div className="w-12 h-1.5 bg-white/40 rounded" />
+            <div className="w-20 h-1.5 bg-white/20 rounded" />
+            <div className="w-16 h-1.5 bg-white/20 rounded" />
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function Proyectos() {
   return (
@@ -75,69 +107,65 @@ export default function Proyectos() {
         </motion.div>
 
         {/* Cards */}
-        <div className="flex flex-col gap-6">
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
           {proyectos.map((p, i) => (
             <motion.div
               key={p.nombre}
               {...fadeUp(0.1 + i * 0.1)}
-              className="group bg-[var(--bg-card)] border border-[var(--border)] rounded-3xl overflow-hidden hover:border-violet-500/30 transition-all duration-300"
+              className="group bg-[var(--bg-card)] border border-[var(--border)] rounded-3xl overflow-hidden hover:border-violet-500/30 transition-all duration-300 flex flex-col"
             >
-              {/* Top gradient bar */}
-              <div className={`h-1 w-full bg-gradient-to-r ${p.color.replace('/20', '').replace('/5', '/40')}`} />
+              {/* Screenshot */}
+              <ProjectImage src={p.screenshot} alt={p.nombre} gradient={p.gradient} />
 
-              <div className="p-8 md:p-10">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-                  {/* Left: info */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="text-xs font-mono text-[var(--muted)]">{p.numero}</span>
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${p.accent}`}>
-                        {p.tag}
-                      </span>
-                    </div>
+              {/* Content */}
+              <div className="p-6 flex flex-col flex-1">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-mono text-[var(--muted)]">{p.numero}</span>
+                  <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${p.tagColor}`}>
+                    {p.tag}
+                  </span>
+                </div>
 
-                    <h3 className="text-xl md:text-2xl font-black text-[var(--text)] mb-3 group-hover:text-violet-300 transition-colors">
-                      {p.nombre}
-                    </h3>
+                <h3 className="text-base font-black text-[var(--text)] mb-2 group-hover:text-violet-300 transition-colors">
+                  {p.nombre}
+                </h3>
 
-                    <p className="text-sm text-[var(--muted)] leading-relaxed mb-6 max-w-lg">
-                      {p.descripcion}
-                    </p>
+                <p className="text-xs text-[var(--muted)] leading-relaxed mb-4 flex-1">
+                  {p.descripcion}
+                </p>
 
-                    {/* Stack */}
-                    <div className="flex flex-wrap gap-2">
-                      {p.stack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-xs bg-[var(--bg-card2)] border border-[var(--border)] text-[var(--muted)] px-2.5 py-1 rounded-lg"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Right: links */}
-                  <div className="flex md:flex-col gap-3 shrink-0">
-                    <a
-                      href={p.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-violet-600/25"
+                {/* Stack */}
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {p.stack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-xs bg-[var(--bg-card2)] border border-[var(--border)] text-[var(--muted)] px-2 py-0.5 rounded-lg"
                     >
-                      <ExternalLink className="w-4 h-4" />
-                      Ver demo
-                    </a>
-                    <a
-                      href={p.repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 border border-[var(--border)] hover:border-violet-500/50 text-[var(--muted)] hover:text-[var(--text)] text-sm font-bold px-5 py-2.5 rounded-xl transition-all duration-200 hover:bg-[var(--bg-card2)]"
-                    >
-                      <GithubIcon />
-                      Código
-                    </a>
-                  </div>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Links */}
+                <div className="flex gap-2">
+                  <a
+                    href={p.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-1.5 bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition-all duration-200"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    Demo
+                  </a>
+                  <a
+                    href={p.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1.5 border border-[var(--border)] hover:border-violet-500/50 text-[var(--muted)] hover:text-[var(--text)] text-xs font-bold px-3 py-2.5 rounded-xl transition-all duration-200"
+                  >
+                    <GithubIcon />
+                    Código
+                  </a>
                 </div>
               </div>
             </motion.div>
@@ -145,7 +173,7 @@ export default function Proyectos() {
         </div>
 
         {/* CTA */}
-        <motion.div {...fadeUp(0.4)} className="text-center mt-12">
+        <motion.div {...fadeUp(0.4)} className="text-center">
           <a
             href="https://github.com/Juankarnori"
             target="_blank"

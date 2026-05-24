@@ -8,15 +8,39 @@ const geistSans = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' })
 
 export const metadata: Metadata = {
-  title: 'Juan Noriega — Desarrollador Full Stack',
-  description: 'Desarrollador Full Stack basado en Ambato, Ecuador. Especializado en Next.js, TypeScript y Supabase. Construyo tiendas online, paneles de administración y sistemas a medida.',
-  keywords: 'desarrollador web, full stack, Next.js, TypeScript, Supabase, Ambato, Ecuador',
-  authors: [{ name: 'Juan Noriega' }],
+  title: 'Juan Noriega — Desarrollador Web Full Stack | Ambato, Ecuador',
+  description:
+    'Desarrollador Web Full Stack basado en Ambato, Ecuador. Construyo tiendas online, sistemas de reservas y paneles de administración a medida con Next.js, TypeScript y Supabase.',
+  keywords: [
+    'desarrollador web',
+    'full stack',
+    'Next.js',
+    'TypeScript',
+    'Supabase',
+    'Ambato',
+    'Ecuador',
+    'tienda online',
+    'sistema de reservas',
+  ],
+  authors: [{ name: 'Juan Noriega', url: 'https://github.com/Juankarnori' }],
+  creator: 'Juan Noriega',
   openGraph: {
-    title: 'Juan Noriega — Desarrollador Full Stack',
-    description: 'Convierto negocios físicos en operaciones digitales completas.',
+    title: 'Juan Noriega — Desarrollador Web Full Stack | Ambato, Ecuador',
+    description:
+      'Convierto negocios físicos en operaciones digitales completas — tiendas online, paneles de administración y sistemas a medida.',
     type: 'website',
     locale: 'es_EC',
+    siteName: 'Juan Noriega · Portafolio',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Juan Noriega — Desarrollador Web Full Stack',
+    description:
+      'Convierto negocios físicos en operaciones digitales completas con Next.js y TypeScript.',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 }
 

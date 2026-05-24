@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowDown, MessageCircle } from 'lucide-react'
+import { MessageCircle } from 'lucide-react'
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -81,8 +81,8 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* Social links */}
-        <motion.div {...fade(0.6)} className="flex items-center justify-center gap-6">
+        {/* GitHub link */}
+        <motion.div {...fade(0.6)} className="flex items-center justify-center">
           <a
             href="https://github.com/Juankarnori"
             target="_blank"
@@ -92,30 +92,8 @@ export default function Hero() {
           >
             <GithubIcon />
           </a>
-          <a
-            href="mailto:juanknoriega070@gmail.com"
-            className="text-xs text-[var(--muted)] hover:text-violet-400 transition-colors font-mono"
-          >
-            juanknoriega070@gmail.com
-          </a>
         </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[var(--muted)]"
-      >
-        <span className="text-xs">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
-        >
-          <ArrowDown className="w-4 h-4" />
-        </motion.div>
-      </motion.div>
     </section>
   )
 }
