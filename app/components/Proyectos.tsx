@@ -35,7 +35,7 @@ const proyectos = [
     descripcion:
       'Sistema de reservas genérico para negocios de servicios. Flujo de reserva en 4 pasos, panel de administración, notificaciones por email y gestión de servicios.',
     stack: ['Next.js', 'TypeScript', 'Supabase', 'Resend'],
-    demo: 'https://agendalo.vercel.app',
+    demo: 'https://agendalo-eta.vercel.app',
     repo: 'https://github.com/Juankarnori/agendalo',
     color: 'from-emerald-600/20 to-teal-600/5',
     accent: 'bg-emerald-600/10 text-emerald-400 border-emerald-500/20',
@@ -47,7 +47,7 @@ const proyectos = [
     descripcion:
       'Landing page moderna para un gimnasio con dashboard de métricas en tiempo real. Incluye gráficos de ingresos, membresías activas y asistencia diaria.',
     stack: ['Next.js', 'TypeScript', 'Recharts', 'Tailwind CSS'],
-    demo: 'https://ironpeak.vercel.app',
+    demo: 'https://gym-landing-sand.vercel.app',
     repo: 'https://github.com/Juankarnori/gym-landing',
     color: 'from-orange-600/20 to-red-600/5',
     accent: 'bg-orange-600/10 text-orange-400 border-orange-500/20',
