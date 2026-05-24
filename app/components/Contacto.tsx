@@ -1,7 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, MapPin, MessageCircle, ArrowRight, Clock } from 'lucide-react'
+import { Mail, MapPin, Clock, ArrowRight, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
+import { useActionState } from 'react'
+import { sendContact, type ContactState } from '../actions/contact'
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
@@ -61,7 +63,12 @@ const canales = [
   },
 ]
 
+const inputClass =
+  'w-full bg-[var(--bg-card2)] border border-[var(--border)] rounded-xl px-4 py-3 text-sm text-[var(--text)] placeholder-[var(--muted)] focus:outline-none focus:border-violet-500/60 focus:ring-1 focus:ring-violet-500/30 transition-colors'
+
 export default function Contacto() {
+  const [state, formAction, isPending] = useActionState<ContactState, FormData>(sendContact, null)
+
   return (
     <section id="contacto" className="py-28 px-4">
       <div className="max-w-5xl mx-auto">
@@ -75,52 +82,97 @@ export default function Contacto() {
             </span>
           </h2>
           <p className="text-[var(--muted)] max-w-xl mx-auto leading-relaxed">
-            Estoy disponible para nuevos proyectos. Contame tu idea y te respondo con una
-            propuesta en menos de 24 horas.
+            Completá el formulario o escribime directamente. Te respondo con una propuesta
+            en menos de 24 horas.
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 items-start">
-          {/* Left: CTA principal */}
+          {/* Left: formulario */}
           <motion.div {...fadeUp(0.1)}>
-            <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-3xl p-8 mb-5">
-              <div className="flex items-center gap-2 mb-6">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-sm text-[var(--muted)]">Disponible para proyectos</span>
-              </div>
+            <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-3xl p-8">
+              <h3 className="text-lg font-black text-[var(--text)] mb-6">Enviame un mensaje</h3>
 
-              <h3 className="text-xl font-black text-[var(--text)] mb-3">
-                ¿Listo para empezar?
-              </h3>
-              <p className="text-sm text-[var(--muted)] leading-relaxed mb-7">
-                La forma más rápida es escribirme por WhatsApp. Podemos hablar del proyecto,
-                definir el alcance y arrancar cuanto antes.
-              </p>
+              {state?.ok ? (
+                <div className="flex flex-col items-center justify-center gap-4 py-10 text-center">
+                  <CheckCircle className="w-12 h-12 text-emerald-400" />
+                  <p className="text-[var(--text)] font-semibold">{state.message}</p>
+                </div>
+              ) : (
+                <form action={formAction} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-[var(--muted)] uppercase tracking-widest mb-1.5">
+                      Nombre
+                    </label>
+                    <input
+                      name="nombre"
+                      type="text"
+                      placeholder="Tu nombre"
+                      className={inputClass}
+                      required
+                    />
+                  </div>
 
-              <a
-                href="https://wa.me/593984613243?text=Hola%20Juan%2C%20me%20interesa%20un%20proyecto"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-emerald-600/25 mb-3"
-              >
-                <WhatsAppIcon />
-                Escribir por WhatsApp
-              </a>
+                  <div>
+                    <label className="block text-xs font-bold text-[var(--muted)] uppercase tracking-widest mb-1.5">
+                      Email
+                    </label>
+                    <input
+                      name="email"
+                      type="email"
+                      placeholder="tu@email.com"
+                      className={inputClass}
+                      required
+                    />
+                  </div>
 
-              <a
-                href="mailto:juanknoriega070@gmail.com"
-                className="flex items-center justify-center gap-2 w-full border border-[var(--border)] hover:border-violet-500/50 text-[var(--muted)] hover:text-[var(--text)] font-bold px-6 py-3.5 rounded-xl transition-all duration-200 hover:bg-[var(--bg-card2)]"
-              >
-                <Mail className="w-4 h-4" />
-                Enviar un email
-              </a>
+                  <div>
+                    <label className="block text-xs font-bold text-[var(--muted)] uppercase tracking-widest mb-1.5">
+                      Descripción del proyecto
+                    </label>
+                    <textarea
+                      name="descripcion"
+                      rows={4}
+                      placeholder="Contame en qué consiste tu proyecto, qué necesitás y cuándo querés empezar..."
+                      className={`${inputClass} resize-none`}
+                      required
+                    />
+                  </div>
+
+                  {state?.ok === false && (
+                    <div className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      {state.message}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={isPending}
+                    className="flex items-center justify-center gap-2 w-full bg-violet-600 hover:bg-violet-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold px-6 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-violet-600/25"
+                  >
+                    {isPending ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Enviando...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        Enviar mensaje
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
             </div>
 
             {/* Tiempo respuesta */}
-            <div className="flex items-center gap-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl px-5 py-4">
+            <div className="flex items-center gap-3 bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl px-5 py-4 mt-4">
               <Clock className="w-4 h-4 text-violet-400 shrink-0" />
               <p className="text-xs text-[var(--muted)]">
-                Tiempo de respuesta promedio: <span className="text-[var(--text)] font-semibold">menos de 2 horas</span> en horario laboral (GMT-5)
+                Tiempo de respuesta promedio:{' '}
+                <span className="text-[var(--text)] font-semibold">menos de 2 horas</span> en horario laboral (GMT-5)
               </p>
             </div>
           </motion.div>
