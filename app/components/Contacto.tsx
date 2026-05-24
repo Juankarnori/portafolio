@@ -26,8 +26,8 @@ const canales = [
   {
     icon: WhatsAppIcon,
     label: 'WhatsApp',
-    valor: '+593 98 765 4321',
-    href: 'https://wa.me/593987654321?text=Hola%20Juan%2C%20me%20interesa%20un%20proyecto',
+    valor: '+593 98 461 3243',
+    href: 'https://wa.me/593984613243?text=Hola%20Juan%2C%20me%20interesa%20un%20proyecto',
     color: 'bg-emerald-600/10 border-emerald-500/20 hover:border-emerald-500/50',
     iconColor: 'text-emerald-400',
     badge: 'Respondo en minutos',
@@ -98,7 +98,7 @@ export default function Contacto() {
               </p>
 
               <a
-                href="https://wa.me/593987654321?text=Hola%20Juan%2C%20me%20interesa%20un%20proyecto"
+                href="https://wa.me/593984613243?text=Hola%20Juan%2C%20me%20interesa%20un%20proyecto"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-emerald-600/25 mb-3"
